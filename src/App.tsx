@@ -66,6 +66,14 @@ function App() {
     setBooks(tempBooks);
   };
 
+  const handleDeleteBook = (id: string) => {
+    setBooks(
+      books.filter((book) => {
+        return book.id !== id;
+      })
+    );
+  };
+
   return (
     <div>
       <Layout className="layout">
@@ -105,7 +113,7 @@ function App() {
               onBuy={handleBuyBook}
             />
           ) : (
-            <MyBooks books={books} />
+            <MyBooks books={books} onDeleteBook={handleDeleteBook} />
           )}
         </Content>
         <Footer style={{ textAlign: "center" }}>

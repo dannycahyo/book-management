@@ -1,12 +1,13 @@
 import React from "react";
-import { List, Card } from "antd";
+import { List, Card, Button } from "antd";
 import { BooksProps } from "./App";
 
 type MyBooksProps = {
   books: BooksProps[];
+  onDeleteBook: (id: string) => void;
 };
 
-const MyBooks = ({ books }: MyBooksProps) => {
+const MyBooks = ({ books, onDeleteBook }: MyBooksProps) => {
   const { Meta } = Card;
 
   return (
@@ -18,12 +19,15 @@ const MyBooks = ({ books }: MyBooksProps) => {
           return book.isBuyed === true;
           // return book.isBuyed;
         })}
-        renderItem={(item) => (
+        renderItem={(item, index) => (
           <List.Item>
             <Card cover={<img alt="GRIT" src={item.image} />}>
               {item.writer}
               <Meta title={item.title} description={item.reason} />
             </Card>
+            <Button type="primary" danger onClick={() => onDeleteBook(item.id)}>
+              Delete
+            </Button>
           </List.Item>
         )}
       />
