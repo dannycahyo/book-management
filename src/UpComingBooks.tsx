@@ -5,7 +5,6 @@ import {
   Modal,
   Form,
   List,
-  Checkbox,
   InputNumber,
 } from "antd";
 import { FormProps } from "antd/lib/form/Form";
@@ -156,7 +155,11 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
                 children={item.price}
               />
               {item.reason}
-              <Checkbox onChange={() => onBuy(item.id)}>Done</Checkbox>
+              {
+                <Button type="primary" onClick={() => onBuy(item.id)}>
+                  Done
+                </Button>
+              }
             </List.Item>
           )}
         />
