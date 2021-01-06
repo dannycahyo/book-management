@@ -143,20 +143,24 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
             return item.isBuyed === false;
             // return !item.isBuyed;
           })}
-          renderItem={(item) => (
+          renderItem={(book) => (
             <List.Item
-              key={item.title}
-              actions={[item.price]}
-              extra={<img width={200} alt="ListImage" src={item.image} />}
+              key={book.title}
+              actions={[book.price]}
+              extra={<img width={200} alt="ListImage" src={book.image} />}
             >
               <List.Item.Meta
-                title={<a href={item.image}>{item.title}</a>}
-                description={item.writer}
-                children={item.price}
+                title={<a href={book.image}>{book.title}</a>}
+                description={book.writer}
+                children={book.price}
               />
-              {item.reason}
+              {book.reason}
               {
-                <Button type="primary" onClick={() => onBuy(item.id)}>
+                <Button
+                  style={{ marginLeft: 15 }}
+                  type="primary"
+                  onClick={() => onBuy(book.id)}
+                >
                   Done
                 </Button>
               }
