@@ -3,13 +3,14 @@ import UpComingBooks from "./UpComingBooks";
 import MyBooks from "./MyBooks";
 import { Layout, Menu, Breadcrumb } from "antd";
 import { nanoid } from "nanoid";
+import { Switch, Link, Route } from "react-router-dom";
 
-type Pages = "upcomingBooks" | "myBooks";
+// type Pages = "upcomingBooks" | "myBooks";
 
 export type BooksProps = {
   title: string;
   writer: string;
-  price: string | number | undefined;
+  price: number;
   image: string;
   reason: string;
   isBuyed: boolean;
@@ -21,7 +22,7 @@ function App() {
     {
       title: "Ego Is The Enemy",
       writer: "Ryan Holiday",
-      price: 75.0,
+      price: 90.0,
       image: "https://images-na.ssl-images-amazon.com/images/I/81VHlnP5p-L.jpg",
       reason: "Because I Wanna Be A Good Leader",
       isBuyed: true,
@@ -51,7 +52,7 @@ function App() {
 
   const { Header, Content, Footer } = Layout;
 
-  const [activePage, setActivePage] = React.useState<Pages>("myBooks");
+  // const [activePage, setActivePage] = React.useState<Pages>("myBooks");
 
   const handleAddBook = (newBook: BooksProps) => {
     setBooks([...books, newBook]);
@@ -74,29 +75,28 @@ function App() {
     );
   };
 
+  const handleFinishEditBook = (editedBook: BooksProps) => {
+    setBooks(
+      books.map((book) => {
+        return book.id === editedBook.id ? editedBook : book;
+      })
+    );
+  };
+
   return (
     <div>
       <Layout className="layout">
-        <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal">
-            <Menu.Item
-              key="1"
-              onClick={() => {
-                setActivePage("myBooks");
-              }}
-            >
-              My Books
-            </Menu.Item>
-            <Menu.Item
-              key="2"
-              onClick={() => {
-                setActivePage("upcomingBooks");
-              }}
-            >
-              Up Coming Books
-            </Menu.Item>
-          </Menu>
+        <Header style={{ display: "flex" }}>
+          <Link to="/mybooks">
+            <Menu theme="dark" mode="horizontal">
+              <Menu.Item key="1">My Books</Menu.Item>
+            </Menu>
+          </Link>
+          <Link to="upcomingbooks">
+            <Menu theme="dark" mode="horizontal">
+              <Menu.Item key="2">Up Coming Books</Menu.Item>
+            </Menu>
+          </Link>
         </Header>
         <Content
           style={{ padding: "0 50px", textAlign: "center", minHeight: 450 }}
@@ -106,15 +106,22 @@ function App() {
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb>
-          {activePage === "upcomingBooks" ? (
-            <UpComingBooks
-              books={books}
-              onSubmit={handleAddBook}
-              onBuy={handleBuyBook}
-            />
-          ) : (
-            <MyBooks books={books} onDeleteBook={handleDeleteBook} />
-          )}
+          <Switch>
+            <Route path="/mybooks">
+              <MyBooks
+                books={books}
+                onDeleteBook={handleDeleteBook}
+                onFinish={handleFinishEditBook}
+              />
+            </Route>
+            <Route path="/upcomingbooks">
+              <UpComingBooks
+                books={books}
+                onSubmit={handleAddBook}
+                onBuy={handleBuyBook}
+              />
+            </Route>
+          </Switch>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Book Management System, Created By Danny ©2020

@@ -7,6 +7,8 @@ import {
   Form,
   Input as AntdInput,
   Input,
+  Typography,
+  InputNumber,
 } from "antd";
 import { BooksProps } from "./App";
 import { FormLayout } from "antd/lib/form/Form";
@@ -14,30 +16,36 @@ import { FormLayout } from "antd/lib/form/Form";
 type MyBooksProps = {
   books: BooksProps[];
   onDeleteBook: (id: string) => void;
+  onFinish: (value: BooksProps) => void;
 };
 
-const MyBooks = ({ books, onDeleteBook }: MyBooksProps) => {
-  const { Meta } = Card;
-  const { TextArea } = Input;
-
-  // const [selectedBook, setSelectedBook] = useState<BooksProps | null>(null);
+const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
+  const [selectedBook, setSelectedBook] = useState<BooksProps | null>(null);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
+  const [isOpenModalVisible, setIsOpenModalVisible] = useState<boolean>(false);
+
   const [imageValue, setImageValue] = useState<string>("");
+  const [priceValue, setPriceValue] = useState<number>(0);
   const [titleValue, setTitleValue] = useState<string>("");
   const [writerValue, setWriterValue] = useState<string>("");
   const [reasonValue, setReasonValue] = useState<string>("");
 
   const [formLayout, setFormLayout] = useState<FormLayout>("horizontal");
 
+  const handleSearchBook = () => {};
+
   const handleShowModal = (layout: FormLayout = "horizontal") => {
     setFormLayout(layout);
     setIsModalVisible(true);
-    // setImageValue(selectedBook.image);
-    // setTitleValue(selectedBook.title);
-    // setWriterValue(selectedBook.writer);
-    // setReasonValue(selectedBook.reason);
+    if (selectedBook) {
+      setImageValue(selectedBook.image);
+      setTitleValue(selectedBook.title);
+      setWriterValue(selectedBook.writer);
+      setReasonValue(selectedBook.reason);
+      setPriceValue(selectedBook.price);
+    }
   };
 
   const handleOkModal = () => {
@@ -52,6 +60,10 @@ const MyBooks = ({ books, onDeleteBook }: MyBooksProps) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setImageValue(event.target.value);
+  };
+
+  const handlePriceValueChange = (value: string | number | undefined) => {
+    if (typeof value === "number") setPriceValue(value);
   };
 
   const handleTitleValueChange = (
@@ -72,9 +84,41 @@ const MyBooks = ({ books, onDeleteBook }: MyBooksProps) => {
     setReasonValue(event.target.value);
   };
 
-  const handleFinishEdit = () => {};
+  const handleShowOpenModal = (book: BooksProps) => {
+    setSelectedBook(book);
+    setIsOpenModalVisible(true);
+  };
 
-  const [form] = Form.useForm();
+  const handleShowOpenModalOk = () => {
+    setIsOpenModalVisible(false);
+    setSelectedBook(null);
+  };
+
+  const handleShowOpenModalCancel = () => {
+    setIsOpenModalVisible(false);
+    setSelectedBook(null);
+  };
+
+  const handleFinishEdit = () => {
+    const editedBook = {
+      title: titleValue,
+      image: imageValue,
+      isBuyed: true,
+      price: priceValue,
+      writer: writerValue,
+      reason: reasonValue,
+      id: selectedBook?.id ?? "",
+    };
+    onFinish(editedBook);
+    setSelectedBook(editedBook);
+    setIsModalVisible(false);
+  };
+
+  const handleDeleteBook = (id: string) => {
+    onDeleteBook(id);
+    setIsOpenModalVisible(false);
+    setSelectedBook(null);
+  };
 
   const formItemLayout =
     formLayout === "horizontal"
@@ -91,9 +135,24 @@ const MyBooks = ({ books, onDeleteBook }: MyBooksProps) => {
         }
       : null;
 
+  const { TextArea } = Input;
+
+  const { Search } = Input;
+
   return (
     <div style={{}}>
-      <h1 className="site-layout-content">My Books</h1>
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
+        <h1 style={{ marginRight: 20 }}>My Books</h1>
+        <Search
+          style={{ width: "50%" }}
+          placeholder="Are You Looking For Some Books ?"
+          allowClear
+          enterButton="Search"
+          size="large"
+          onSearch={handleSearchBook}
+        />
+      </div>
+
       <List
         grid={{ gutter: 16, column: 4 }}
         dataSource={books.filter((book) => {
@@ -103,51 +162,89 @@ const MyBooks = ({ books, onDeleteBook }: MyBooksProps) => {
         renderItem={(book) => (
           <List.Item>
             <Card
-              style={{ height: 500 }}
               cover={
                 <img style={{ height: 350 }} alt="GRIT" src={book.image} />
               }
             >
-              {book.writer}
-              <Meta title={book.title} description={book.reason} />
+              {book.title}
             </Card>
-            <Button type="primary" danger onClick={() => onDeleteBook(book.id)}>
-              Delete
-            </Button>
-            <Button
-              style={{ marginLeft: 15 }}
-              type="primary"
-              onClick={() => handleShowModal(formLayout)}
-            >
-              Edit
+            <Button type="primary" onClick={() => handleShowOpenModal(book)}>
+              Open
             </Button>
           </List.Item>
         )}
       />
       <Modal
+        visible={isOpenModalVisible}
+        onOk={handleShowOpenModalOk}
+        onCancel={handleShowOpenModalCancel}
+      >
+        {selectedBook && (
+          <>
+            <img width={272} alt="logo" src={selectedBook.image} />
+            <Typography.Title>{selectedBook.title}</Typography.Title>
+            <Typography.Title>{selectedBook.writer}</Typography.Title>
+            <Typography.Title>{selectedBook.price}</Typography.Title>
+            <Typography.Paragraph>{selectedBook.reason}</Typography.Paragraph>
+            <Button
+              style={{ marginRight: 15 }}
+              type="primary"
+              onClick={() => handleShowModal(formLayout)}
+            >
+              Edit
+            </Button>
+            <Button
+              type="primary"
+              danger
+              onClick={() => handleDeleteBook(selectedBook.id)}
+            >
+              Delete
+            </Button>
+          </>
+        )}
+      </Modal>
+      <Modal
         visible={isModalVisible}
         onOk={handleOkModal}
         onCancel={handleCancelModal}
       >
-        <Form
-          {...formItemLayout}
-          layout={formLayout}
-          form={form}
-          initialValues={{ layout: formLayout }}
-        >
+        <Form {...formItemLayout} layout={formLayout}>
           <Form.Item label="Image">
-            <AntdInput value={imageValue} onChange={handleImageValueChange} />
+            <AntdInput
+              value={imageValue}
+              allowClear
+              onChange={handleImageValueChange}
+            />
           </Form.Item>
           <Form.Item label="Title">
-            <AntdInput value={titleValue} onChange={handleTitleValueChange} />
+            <AntdInput
+              value={titleValue}
+              allowClear
+              onChange={handleTitleValueChange}
+            />
+          </Form.Item>
+          <Form.Item label="Price">
+            <InputNumber
+              min={50}
+              max={200}
+              onChange={handlePriceValueChange}
+              value={priceValue}
+            />
           </Form.Item>
           <Form.Item label="Writer">
-            <AntdInput value={writerValue} onChange={handleWriterValueChage} />
+            <AntdInput
+              value={writerValue}
+              allowClear
+              onChange={handleWriterValueChage}
+            />
           </Form.Item>
           <Form.Item label="Reason">
-            <TextArea value={reasonValue} onChange={handleReasonValueChange} />
+            <TextArea
+              value={reasonValue}
+              allowClear
+              onChange={handleReasonValueChange}
+            />
           </Form.Item>
-
           <Form.Item {...buttonItemLayout}>
             <Button type="primary" onClick={handleFinishEdit}>
               Finish

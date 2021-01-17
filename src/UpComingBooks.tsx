@@ -7,7 +7,7 @@ import {
   List,
   InputNumber,
 } from "antd";
-import { FormProps } from "antd/lib/form/Form";
+import { FormLayout } from "antd/lib/form/Form";
 import { BooksProps } from "./App";
 import { nanoid } from "nanoid";
 
@@ -22,17 +22,13 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
 
   const [titleValue, setTitleValue] = useState<string>("");
   const [writerValue, setWriterValue] = useState<string>("");
-  const [priceValue, setPriceValue] = useState<string | number | undefined>(
-    100
-  );
+  const [priceValue, setPriceValue] = useState<number>(0);
   const [imageValue, setImageValue] = useState<string>("");
   const [reasonValue, setReasonValue] = useState<string>("");
 
-  const [form] = Form.useForm();
+  const [formLayout, setFormLayout] = useState<FormLayout>("horizontal");
 
-  const [formLayout, setFormLayout] = useState<FormProps["layout"]>();
-
-  const handleShowModal = (layout: FormProps["layout"]) => {
+  const handleShowModal = (layout: FormLayout = "horizontal") => {
     setFormLayout(layout);
     setIsModalVisible(true);
   };
@@ -53,7 +49,7 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
     setWriterValue(event.target.value);
   };
   const handleFormPriceChange = (value: string | number | undefined) => {
-    setPriceValue(value);
+    if (typeof value === "number") setPriceValue(value);
   };
   const handleFormImageChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -80,6 +76,8 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
 
   const { TextArea } = AntdInput;
 
+  // const [form] = Form.useForm();
+
   const formItemLayout =
     formLayout === "horizontal"
       ? {
@@ -91,9 +89,10 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
   const buttonItemLayout =
     formLayout === "horizontal"
       ? {
-          wrapperCol: { span: 14, offset: 4 },
+          wrapperCol: { span: 14, offset: 20 },
         }
       : null;
+
   return (
     <div>
       <div
@@ -134,23 +133,19 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
           itemLayout="vertical"
           size="large"
           pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
             pageSize: 3,
           }}
           dataSource={books.filter((item) => {
-            return item.isBuyed === false;
-            // return !item.isBuyed;
+            return !item.isBuyed;
+            // return item.isBuyed === false
           })}
           renderItem={(book) => (
             <List.Item
-              key={book.title}
               actions={[book.price]}
               extra={<img width={200} alt="ListImage" src={book.image} />}
             >
               <List.Item.Meta
-                title={<a href={book.image}>{book.title}</a>}
+                title={book.title}
                 description={book.writer}
                 children={book.price}
               />
@@ -176,9 +171,9 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
           onCancel={handleCancelModal}
         >
           <Form
-            {...formItemLayout}
             layout={formLayout}
-            form={form}
+            {...formItemLayout}
+            // form={form}
             initialValues={{ layout: formLayout }}
           >
             <Form.Item label="Title">
@@ -199,9 +194,10 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
             </Form.Item>
             <Form.Item label="Price">
               <InputNumber
-                min={50}
+                min={0}
                 max={200}
                 onChange={handleFormPriceChange}
+                value={priceValue}
               />
             </Form.Item>
             <Form.Item label="Image">
@@ -214,14 +210,16 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
             </Form.Item>
             <Form.Item label="Reason">
               <TextArea
+                placeholder="Why you decide to buy the book ?"
                 rows={4}
                 allowClear
                 onChange={handleFormReasonChange}
                 value={reasonValue}
               />
             </Form.Item>
-            <Form.Item {...buttonItemLayout}>
+            <Form.Item>
               <Button
+                {...buttonItemLayout}
                 type="primary"
                 htmlType="submit"
                 onClick={handleSubmitForm}
