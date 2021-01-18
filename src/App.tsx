@@ -3,9 +3,7 @@ import UpComingBooks from "./UpComingBooks";
 import MyBooks from "./MyBooks";
 import { Layout, Menu, Breadcrumb } from "antd";
 import { nanoid } from "nanoid";
-import { Switch, Link, Route } from "react-router-dom";
-
-// type Pages = "upcomingBooks" | "myBooks";
+import { Switch, Link, Route, useLocation } from "react-router-dom";
 
 export type BooksProps = {
   title: string;
@@ -52,8 +50,6 @@ function App() {
 
   const { Header, Content, Footer } = Layout;
 
-  // const [activePage, setActivePage] = React.useState<Pages>("myBooks");
-
   const handleAddBook = (newBook: BooksProps) => {
     setBooks([...books, newBook]);
   };
@@ -83,20 +79,20 @@ function App() {
     );
   };
 
+  const { pathname } = useLocation();
+
   return (
     <div>
       <Layout className="layout">
         <Header style={{ display: "flex" }}>
-          <Link to="/mybooks">
-            <Menu theme="dark" mode="horizontal">
-              <Menu.Item key="1">My Books</Menu.Item>
-            </Menu>
-          </Link>
-          <Link to="upcomingbooks">
-            <Menu theme="dark" mode="horizontal">
-              <Menu.Item key="2">Up Coming Books</Menu.Item>
-            </Menu>
-          </Link>
+          <Menu theme="dark" mode="horizontal" selectedKeys={[pathname]}>
+            <Menu.Item key="/mybooks">
+              <Link to="/mybooks">My Books</Link>
+            </Menu.Item>
+            <Menu.Item key="/upcomingbooks">
+              <Link to="/upcomingbooks">Up Coming Books</Link>
+            </Menu.Item>
+          </Menu>
         </Header>
         <Content
           style={{ padding: "0 50px", textAlign: "center", minHeight: 450 }}

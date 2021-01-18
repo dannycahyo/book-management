@@ -32,9 +32,13 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
   const [writerValue, setWriterValue] = useState<string>("");
   const [reasonValue, setReasonValue] = useState<string>("");
 
+  const [searchValue, setSearchValue] = useState<string>("");
+
   const [formLayout, setFormLayout] = useState<FormLayout>("horizontal");
 
-  const handleSearchBook = () => {};
+  const handleSearchBook = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
 
   const handleShowModal = (layout: FormLayout = "horizontal") => {
     setFormLayout(layout);
@@ -84,7 +88,7 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
     setReasonValue(event.target.value);
   };
 
-  const handleShowOpenModal = (book: BooksProps) => {
+  const handleShowOpenModal = (book: BooksProps | null) => {
     setSelectedBook(book);
     setIsOpenModalVisible(true);
   };
@@ -120,6 +124,14 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
     setSelectedBook(null);
   };
 
+  const filteredBooks = books.filter((book) => {
+    return (
+      book.title
+        .toLocaleLowerCase()
+        .includes(searchValue.toLocaleLowerCase()) && book.isBuyed
+    );
+  });
+
   const formItemLayout =
     formLayout === "horizontal"
       ? {
@@ -137,43 +149,46 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
 
   const { TextArea } = Input;
 
-  const { Search } = Input;
-
   return (
     <div style={{}}>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <h1 style={{ marginRight: 20 }}>My Books</h1>
-        <Search
+        <AntdInput
           style={{ width: "50%" }}
           placeholder="Are You Looking For Some Books ?"
           allowClear
-          enterButton="Search"
           size="large"
-          onSearch={handleSearchBook}
+          onChange={handleSearchBook}
+          value={searchValue}
         />
       </div>
-
-      <List
-        grid={{ gutter: 16, column: 4 }}
-        dataSource={books.filter((book) => {
-          return book.isBuyed === true;
-          // return book.isBuyed;
-        })}
-        renderItem={(book) => (
-          <List.Item>
-            <Card
-              cover={
-                <img style={{ height: 350 }} alt="GRIT" src={book.image} />
-              }
-            >
-              {book.title}
-            </Card>
-            <Button type="primary" onClick={() => handleShowOpenModal(book)}>
-              Open
-            </Button>
-          </List.Item>
-        )}
-      />
+      {filteredBooks.length === 0 ? (
+        <h1>Cannot Find Book</h1>
+      ) : (
+        <div>
+          <List
+            grid={{ gutter: 16, column: 4 }}
+            dataSource={filteredBooks}
+            renderItem={(book) => (
+              <List.Item>
+                <Card
+                  cover={
+                    <img style={{ height: 350 }} alt="GRIT" src={book.image} />
+                  }
+                >
+                  {book.title}
+                </Card>
+                <Button
+                  type="primary"
+                  onClick={() => handleShowOpenModal(book)}
+                >
+                  Open
+                </Button>
+              </List.Item>
+            )}
+          />
+        </div>
+      )}
       <Modal
         visible={isOpenModalVisible}
         onOk={handleShowOpenModalOk}
