@@ -170,46 +170,46 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
           onOk={handleOkModal}
           onCancel={handleCancelModal}
         >
-          <Form
-            layout={formLayout}
-            {...formItemLayout}
-            // form={form}
-            initialValues={{ layout: formLayout }}
-          >
-            <Form.Item label="Title">
+          <Form layout={formLayout} {...formItemLayout}>
+            <Form.Item label="Title" htmlFor="title">
               <AntdInput
+                id="title"
                 placeholder="Type The Title Of Your Books"
                 allowClear
                 onChange={handleFormTitleChange}
                 value={titleValue}
               />
             </Form.Item>
-            <Form.Item label="Writer">
+            <Form.Item label="Writer" htmlFor="writer">
               <AntdInput
+                id="writer"
                 placeholder="Type The Writer"
                 allowClear
                 onChange={handleFormWriterChange}
                 value={writerValue}
               />
             </Form.Item>
-            <Form.Item label="Price">
+            <Form.Item label="Price" htmlFor="price">
               <InputNumber
+                id="price"
                 min={0}
                 max={200}
                 onChange={handleFormPriceChange}
                 value={priceValue}
               />
             </Form.Item>
-            <Form.Item label="Image">
+            <Form.Item label="Image" htmlFor="image">
               <AntdInput
+                id="image"
                 placeholder="Input Link Of The Image"
                 allowClear
                 onChange={handleFormImageChange}
                 value={imageValue}
               />
             </Form.Item>
-            <Form.Item label="Reason">
+            <Form.Item label="Reason" htmlFor="reason">
               <TextArea
+                id="reason"
                 placeholder="Why you decide to buy the book ?"
                 rows={4}
                 allowClear

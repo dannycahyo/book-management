@@ -224,37 +224,42 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
         onCancel={handleCancelModal}
       >
         <Form {...formItemLayout} layout={formLayout}>
-          <Form.Item label="Image">
+          <Form.Item label="Title" htmlFor="title">
             <AntdInput
-              value={imageValue}
-              allowClear
-              onChange={handleImageValueChange}
-            />
-          </Form.Item>
-          <Form.Item label="Title">
-            <AntdInput
+              id="title"
               value={titleValue}
               allowClear
               onChange={handleTitleValueChange}
             />
           </Form.Item>
-          <Form.Item label="Price">
+          <Form.Item label="Price" htmlFor="price">
             <InputNumber
+              id="price"
               min={50}
               max={200}
               onChange={handlePriceValueChange}
               value={priceValue}
             />
           </Form.Item>
-          <Form.Item label="Writer">
+          <Form.Item label="Writer" htmlFor="writer">
             <AntdInput
+              id="writer"
               value={writerValue}
               allowClear
               onChange={handleWriterValueChage}
             />
           </Form.Item>
-          <Form.Item label="Reason">
+          <Form.Item label="Image" htmlFor="image">
+            <AntdInput
+              id="image"
+              value={imageValue}
+              allowClear
+              onChange={handleImageValueChange}
+            />
+          </Form.Item>
+          <Form.Item label="Reason" htmlFor="reason">
             <TextArea
+              id="reason"
               value={reasonValue}
               allowClear
               onChange={handleReasonValueChange}
