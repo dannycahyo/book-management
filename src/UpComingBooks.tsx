@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useFetchBook, { Book } from "./useFetchBook";
 import {
   Input as AntdInput,
   Button,
@@ -8,16 +9,18 @@ import {
   InputNumber,
 } from "antd";
 import { FormLayout } from "antd/lib/form/Form";
-import { BooksProps } from "./App";
-import { nanoid } from "nanoid";
+// import { BooksProps } from "./App";
+// import { nanoid } from "nanoid";
 
-type UpComingBooksProps = {
-  books: BooksProps[];
-  onSubmit: (value: BooksProps) => void;
-  onBuy: (id: string) => void;
-};
+// type UpComingBooksProps = {
+//   books: BooksProps[];
+//   onSubmit: (value: BooksProps) => void;
+//   onBuy: (id: string) => void;
+// };
 
-const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
+const UpComingBooks = () => {
+  const { books } = useFetchBook();
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const [titleValue, setTitleValue] = useState<string>("");
@@ -62,15 +65,15 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
     setReasonValue(event.target.value);
   };
   const handleSubmitForm = () => {
-    onSubmit({
-      title: titleValue,
-      writer: writerValue,
-      price: priceValue,
-      image: imageValue,
-      reason: reasonValue,
-      isBuyed: false,
-      id: nanoid(),
-    });
+    // onSubmit({
+    //   title: titleValue,
+    //   writer: writerValue,
+    //   price: priceValue,
+    //   image: imageValue,
+    //   reason: reasonValue,
+    //   isBuyed: false,
+    //   id: nanoid(),
+    // });
     setIsModalVisible(false);
   };
 
@@ -135,11 +138,11 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
           pagination={{
             pageSize: 3,
           }}
-          dataSource={books.filter((item) => {
-            return !item.isBuyed;
+          dataSource={books?.filter((book: Book) => {
+            return !book.isBuyed;
             // return item.isBuyed === false
           })}
-          renderItem={(book) => (
+          renderItem={(book: Book) => (
             <List.Item
               actions={[book.price]}
               extra={<img width={200} alt="ListImage" src={book.image} />}
@@ -154,7 +157,7 @@ const UpComingBooks = ({ books, onSubmit, onBuy }: UpComingBooksProps) => {
                 <Button
                   style={{ marginLeft: 15 }}
                   type="primary"
-                  onClick={() => onBuy(book.id)}
+                  // onClick={() => onBuy(book._id)}
                 >
                   Done
                 </Button>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useFetchBook, { Book } from "./useFetchBook";
 import {
   List,
   Card,
@@ -10,24 +11,26 @@ import {
   Typography,
   InputNumber,
 } from "antd";
-import { BooksProps } from "./App";
+// import { BooksProps } from "./App";
 import { FormLayout } from "antd/lib/form/Form";
 
-type MyBooksProps = {
-  books: BooksProps[];
-  onDeleteBook: (id: string) => void;
-  onFinish: (value: BooksProps) => void;
-};
+// type MyBooksProps = {
+//   books: BooksProps[];
+//   onDeleteBook: (id: string) => void;
+//   onFinish: (value: BooksProps) => void;
+// };
 
-const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
-  const [selectedBook, setSelectedBook] = useState<BooksProps | null>(null);
+const MyBooks = () => {
+  const { books } = useFetchBook();
+
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const [isOpenModalVisible, setIsOpenModalVisible] = useState<boolean>(false);
 
   const [imageValue, setImageValue] = useState<string>("");
-  const [priceValue, setPriceValue] = useState<number>(0);
+  const [priceValue, setPriceValue] = useState<string>("");
   const [titleValue, setTitleValue] = useState<string>("");
   const [writerValue, setWriterValue] = useState<string>("");
   const [reasonValue, setReasonValue] = useState<string>("");
@@ -66,8 +69,10 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
     setImageValue(event.target.value);
   };
 
-  const handlePriceValueChange = (value: string | number | undefined) => {
-    if (typeof value === "number") setPriceValue(value);
+  const handlePriceValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPriceValue(event.target.value);
   };
 
   const handleTitleValueChange = (
@@ -88,7 +93,7 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
     setReasonValue(event.target.value);
   };
 
-  const handleShowOpenModal = (book: BooksProps | null) => {
+  const handleShowOpenModal = (book: Book | null) => {
     setSelectedBook(book);
     setIsOpenModalVisible(true);
   };
@@ -111,20 +116,20 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
       price: priceValue,
       writer: writerValue,
       reason: reasonValue,
-      id: selectedBook?.id ?? "",
+      id: selectedBook?._id ?? "",
     };
-    onFinish(editedBook);
-    setSelectedBook(editedBook);
-    setIsModalVisible(false);
+    // onFinish(editedBook);
+    // setSelectedBook(editedBook);
+    // setIsModalVisible(false);
   };
 
-  const handleDeleteBook = (id: string) => {
-    onDeleteBook(id);
-    setIsOpenModalVisible(false);
-    setSelectedBook(null);
+  const handleDeleteBook = (_id: string) => {
+    // onDeleteBook(id);
+    // setIsOpenModalVisible(false);
+    // setSelectedBook(null);
   };
 
-  const filteredBooks = books.filter((book) => {
+  const filteredBooks = books?.filter((book: Book) => {
     return (
       book.title
         .toLocaleLowerCase()
@@ -162,14 +167,14 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
           value={searchValue}
         />
       </div>
-      {filteredBooks.length === 0 ? (
+      {filteredBooks?.length === 0 ? (
         <h1>Cannot Find Book</h1>
       ) : (
         <div>
           <List
             grid={{ gutter: 16, column: 4 }}
             dataSource={filteredBooks}
-            renderItem={(book) => (
+            renderItem={(book: Book) => (
               <List.Item>
                 <Card
                   cover={
@@ -211,7 +216,7 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
             <Button
               type="primary"
               danger
-              onClick={() => handleDeleteBook(selectedBook.id)}
+              onClick={() => handleDeleteBook(selectedBook._id)}
             >
               Delete
             </Button>
@@ -233,12 +238,11 @@ const MyBooks = ({ books, onDeleteBook, onFinish }: MyBooksProps) => {
             />
           </Form.Item>
           <Form.Item label="Price" htmlFor="price">
-            <InputNumber
+            <AntdInput
               id="price"
-              min={50}
-              max={200}
-              onChange={handlePriceValueChange}
               value={priceValue}
+              allowClear
+              onChange={handlePriceValueChange}
             />
           </Form.Item>
           <Form.Item label="Writer" htmlFor="writer">
