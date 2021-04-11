@@ -9,7 +9,6 @@ import {
   Input as AntdInput,
   Input,
   Typography,
-  InputNumber,
 } from "antd";
 // import { BooksProps } from "./App";
 import { FormLayout } from "antd/lib/form/Form";
@@ -21,7 +20,7 @@ import { FormLayout } from "antd/lib/form/Form";
 // };
 
 const MyBooks = () => {
-  const { books } = useFetchBook();
+  const { books, editBook, deleteBook } = useFetchBook();
 
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
@@ -116,17 +115,26 @@ const MyBooks = () => {
       price: priceValue,
       writer: writerValue,
       reason: reasonValue,
-      id: selectedBook?._id ?? "",
+      _id: selectedBook?._id ?? "",
     };
-    // onFinish(editedBook);
-    // setSelectedBook(editedBook);
-    // setIsModalVisible(false);
+    editBook(editedBook);
+    setSelectedBook(editedBook);
+    setIsModalVisible(false);
   };
 
   const handleDeleteBook = (_id: string) => {
+    deleteBook({
+      title: titleValue,
+      image: imageValue,
+      isBuyed: true,
+      price: priceValue,
+      writer: writerValue,
+      reason: reasonValue,
+      _id,
+    });
     // onDeleteBook(id);
-    // setIsOpenModalVisible(false);
-    // setSelectedBook(null);
+    setIsOpenModalVisible(false);
+    setSelectedBook(null);
   };
 
   const filteredBooks = books?.filter((book: Book) => {

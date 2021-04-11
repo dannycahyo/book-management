@@ -1,31 +1,16 @@
 import React, { useState } from "react";
 import useFetchBook, { Book } from "./useFetchBook";
-import {
-  Input as AntdInput,
-  Button,
-  Modal,
-  Form,
-  List,
-  InputNumber,
-} from "antd";
+import { Input as AntdInput, Button, Modal, Form, List } from "antd";
 import { FormLayout } from "antd/lib/form/Form";
-// import { BooksProps } from "./App";
-// import { nanoid } from "nanoid";
-
-// type UpComingBooksProps = {
-//   books: BooksProps[];
-//   onSubmit: (value: BooksProps) => void;
-//   onBuy: (id: string) => void;
-// };
 
 const UpComingBooks = () => {
-  const { books } = useFetchBook();
+  const { books, addBook } = useFetchBook();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const [titleValue, setTitleValue] = useState<string>("");
   const [writerValue, setWriterValue] = useState<string>("");
-  const [priceValue, setPriceValue] = useState<number>(0);
+  const [priceValue, setPriceValue] = useState<string>("");
   const [imageValue, setImageValue] = useState<string>("");
   const [reasonValue, setReasonValue] = useState<string>("");
 
@@ -51,8 +36,10 @@ const UpComingBooks = () => {
   ) => {
     setWriterValue(event.target.value);
   };
-  const handleFormPriceChange = (value: string | number | undefined) => {
-    if (typeof value === "number") setPriceValue(value);
+  const handleFormPriceChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPriceValue(event.target.value);
   };
   const handleFormImageChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -65,21 +52,27 @@ const UpComingBooks = () => {
     setReasonValue(event.target.value);
   };
   const handleSubmitForm = () => {
-    // onSubmit({
-    //   title: titleValue,
-    //   writer: writerValue,
-    //   price: priceValue,
-    //   image: imageValue,
-    //   reason: reasonValue,
-    //   isBuyed: false,
-    //   id: nanoid(),
-    // });
+    addBook({
+      title: titleValue,
+      writer: writerValue,
+      price: priceValue,
+      image: imageValue,
+      reason: reasonValue,
+      isBuyed: false,
+    });
     setIsModalVisible(false);
   };
 
-  const { TextArea } = AntdInput;
+  const handleBuyBook = (id: string) => {
+    // const tempBooks = [...books];
+    // const index = tempBooks.findIndex((book) => {
+    //   return book.id === id;
+    // });
+    // tempBooks[index].isBuyed = true;
+    // setBooks(tempBooks);
+  };
 
-  // const [form] = Form.useForm();
+  const { TextArea } = AntdInput;
 
   const formItemLayout =
     formLayout === "horizontal"
@@ -140,7 +133,6 @@ const UpComingBooks = () => {
           }}
           dataSource={books?.filter((book: Book) => {
             return !book.isBuyed;
-            // return item.isBuyed === false
           })}
           renderItem={(book: Book) => (
             <List.Item
@@ -193,10 +185,10 @@ const UpComingBooks = () => {
               />
             </Form.Item>
             <Form.Item label="Price" htmlFor="price">
-              <InputNumber
+              <AntdInput
                 id="price"
-                min={0}
-                max={200}
+                placeholder="Input the price"
+                allowClear
                 onChange={handleFormPriceChange}
                 value={priceValue}
               />

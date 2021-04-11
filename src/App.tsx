@@ -1,19 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import UpComingBooks from "./UpComingBooks";
 import MyBooks from "./MyBooks";
 import { Layout, Menu, Breadcrumb } from "antd";
-// import { nanoid } from "nanoid";
 import { Switch, Link, Route, useLocation } from "react-router-dom";
-
-// export type BooksProps = {
-//   title: string;
-//   writer: string;
-//   price: number;
-//   image: string;
-//   reason: string;
-//   isBuyed: boolean;
-//   id: string;
-// };
 
 function App() {
   // const [books, setBooks] = useState<BooksProps[]>([
