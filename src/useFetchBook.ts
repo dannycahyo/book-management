@@ -13,12 +13,12 @@ export type Book = {
 export type NewBook = Omit<Book, "_id">;
 
 const requestGetBooks = async () => {
-  const res = await fetch("http://localhost:3000/book");
+  const res = await fetch(`${process.env.REACT_APP_BOOK_URL}`);
   return res.json();
 };
 
 const requestAddBooks = async (newBook: NewBook) => {
-  const res = await fetch("http://localhost:3000/book", {
+  const res = await fetch(`${process.env.REACT_APP_BOOK_URL}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newBook),
@@ -28,20 +28,26 @@ const requestAddBooks = async (newBook: NewBook) => {
 };
 
 const requestEditBooks = async (editedBook: Book) => {
-  const res = await fetch("http://localhost:3000/book/" + editedBook._id, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(editedBook),
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_BOOK_URL}/` + editedBook._id,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editedBook),
+    }
+  );
   const books = await res.json();
   return books;
 };
 
 const requestDeleteBook = async (deletedBook: Book) => {
-  const res = await fetch("http://localhost:3000/book/" + deletedBook._id, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_BOOK_URL}/` + deletedBook._id,
+    {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
   const books = await res.json();
   return books;
 };

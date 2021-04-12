@@ -10,14 +10,7 @@ import {
   Input,
   Typography,
 } from "antd";
-// import { BooksProps } from "./App";
 import { FormLayout } from "antd/lib/form/Form";
-
-// type MyBooksProps = {
-//   books: BooksProps[];
-//   onDeleteBook: (id: string) => void;
-//   onFinish: (value: BooksProps) => void;
-// };
 
 const MyBooks = () => {
   const { books, editBook, deleteBook } = useFetchBook();
