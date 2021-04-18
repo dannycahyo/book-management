@@ -4,7 +4,7 @@ import { Input as AntdInput, Button, Modal, Form, List } from "antd";
 import { FormLayout } from "antd/lib/form/Form";
 
 const UpComingBooks = () => {
-  const { books, addBook } = useFetchBook();
+  const { books, addBook, editBook } = useFetchBook();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -63,13 +63,16 @@ const UpComingBooks = () => {
     setIsModalVisible(false);
   };
 
-  const handleBuyBook = (id: string) => {
-    // const tempBooks = [...books];
-    // const index = tempBooks.findIndex((book) => {
-    //   return book.id === id;
-    // });
-    // tempBooks[index].isBuyed = true;
-    // setBooks(tempBooks);
+  const handleBuyBook = (book: Book) => {
+    editBook({
+      title: book.title,
+      writer: book.writer,
+      price: book.price,
+      image: book.image,
+      reason: book.reason,
+      isBuyed: true,
+      _id: book._id,
+    });
   };
 
   const { TextArea } = AntdInput;
@@ -149,7 +152,7 @@ const UpComingBooks = () => {
                 <Button
                   style={{ marginLeft: 15 }}
                   type="primary"
-                  // onClick={() => onBuy(book._id)}
+                  onClick={() => handleBuyBook(book)}
                 >
                   Done
                 </Button>

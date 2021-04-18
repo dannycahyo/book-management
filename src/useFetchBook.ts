@@ -72,7 +72,7 @@ export default function useFetchBook() {
   const { mutate: editBook } = useMutation<Book, Error, Book>(
     requestEditBooks,
     {
-      onSuccess: (editedBook) => {
+      onMutate: (editedBook) => {
         queryClient.setQueryData<Book[]>("books", (currentBook) => {
           return (
             currentBook?.map((book) =>

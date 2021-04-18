@@ -125,7 +125,6 @@ const MyBooks = () => {
       reason: reasonValue,
       _id,
     });
-    // onDeleteBook(id);
     setIsOpenModalVisible(false);
     setSelectedBook(null);
   };
