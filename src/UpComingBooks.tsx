@@ -1,7 +1,29 @@
 import React, { useState } from "react";
 import useFetchBook, { Book } from "./useFetchBook";
-import { Input as AntdInput, Button, Modal, Form, List } from "antd";
+import {
+  Input as AntdInput,
+  Button,
+  Modal,
+  Form,
+  List,
+  Typography,
+  Space,
+  Avatar,
+  Divider,
+  Row,
+  Col,
+  Image,
+  Result,
+} from "antd";
+import {
+  BulbOutlined,
+  CheckOutlined,
+  DollarOutlined,
+  CaretUpOutlined,
+} from "@ant-design/icons";
+import { RiBookMarkFill } from "react-icons/ri";
 import { FormLayout } from "antd/lib/form/Form";
+import SvgImage from "./Assets/undraw_book_lover_mkck.svg";
 
 const UpComingBooks = () => {
   const { books, addBook, editBook } = useFetchBook();
@@ -9,52 +31,24 @@ const UpComingBooks = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const [titleValue, setTitleValue] = useState<string>("");
-  const [writerValue, setWriterValue] = useState<string>("");
+  const [authorValue, setAuthorValue] = useState<string>("");
+  const [categoryValue, setCategoryValue] = useState<string>("");
   const [priceValue, setPriceValue] = useState<string>("");
   const [imageValue, setImageValue] = useState<string>("");
   const [reasonValue, setReasonValue] = useState<string>("");
 
-  const [formLayout, setFormLayout] = useState<FormLayout>("horizontal");
+  const [formLayout, setFormLayout] = useState<FormLayout>("vertical");
 
-  const handleShowModal = (layout: FormLayout = "horizontal") => {
+  const handleShowModal = (layout: FormLayout = "vertical") => {
     setFormLayout(layout);
     setIsModalVisible(true);
   };
-  const handleCancelModal = () => {
-    setIsModalVisible(false);
-  };
-  const handleOkModal = () => {
-    setIsModalVisible(false);
-  };
-  const handleFormTitleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTitleValue(event.target.value);
-  };
-  const handleFormWriterChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setWriterValue(event.target.value);
-  };
-  const handleFormPriceChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPriceValue(event.target.value);
-  };
-  const handleFormImageChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setImageValue(event.target.value);
-  };
-  const handleFormReasonChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setReasonValue(event.target.value);
-  };
+
   const handleSubmitForm = () => {
     addBook({
       title: titleValue,
-      writer: writerValue,
+      author: authorValue,
+      category: categoryValue,
       price: priceValue,
       image: imageValue,
       reason: reasonValue,
@@ -66,7 +60,8 @@ const UpComingBooks = () => {
   const handleBuyBook = (book: Book) => {
     editBook({
       title: book.title,
-      writer: book.writer,
+      author: book.author,
+      category: book.category,
       price: book.price,
       image: book.image,
       reason: book.reason,
@@ -77,147 +72,258 @@ const UpComingBooks = () => {
 
   const { TextArea } = AntdInput;
 
-  const formItemLayout =
-    formLayout === "horizontal"
-      ? {
-          labelCol: { span: 4 },
-          wrapperCol: { span: 14 },
-        }
-      : null;
-
-  const buttonItemLayout =
-    formLayout === "horizontal"
-      ? {
-          wrapperCol: { span: 14, offset: 20 },
-        }
-      : null;
+  const IconText = ({ icon, text }: any) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          textAlign: "center",
-          fontSize: 15,
-          color: "black",
-        }}
-      >
-        <h1
-          style={{
-            fontFamily: "sans-serif",
-            display: "block",
-            marginRight: 15,
-          }}
-        >
-          Would You Like To Buy A Books ?
-        </h1>
-        <Button
-          type="primary"
-          onClick={() => {
-            handleShowModal(formLayout);
-          }}
-        >
-          Up Coming Books
-        </Button>
-      </div>
-      <div
-        style={{
-          display: "block",
-          marginTop: 30,
-          marginBottom: 30,
-          width: 800,
-        }}
-      >
-        <List
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            pageSize: 3,
-          }}
-          dataSource={books?.filter((book: Book) => {
-            return !book.isBuyed;
-          })}
-          renderItem={(book: Book) => (
-            <List.Item
-              actions={[book.price]}
-              extra={<img width={200} alt="ListImage" src={book.image} />}
+      <Row justify="space-between" gutter={[48, 12]}>
+        <Col span={12}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              marginTop: 20,
+            }}
+          >
+            <Typography.Title style={{ color: "#3182CE" }} level={1}>
+              This Is The List Of Your Future Book
+            </Typography.Title>
+            <Button
+              size="large"
+              style={{
+                background: "#3182CE",
+                color: "white",
+                borderRadius: 10,
+                marginBottom: 15,
+                fontWeight: "bold",
+              }}
+              onClick={() => {
+                handleShowModal(formLayout);
+              }}
             >
-              <List.Item.Meta
-                title={book.title}
-                description={book.writer}
-                children={book.price}
+              Add More Book
+              <CaretUpOutlined />
+            </Button>
+          </div>
+          <Image
+            height={550}
+            style={{ marginTop: 20 }}
+            src={SvgImage}
+            alt="Banner"
+            preview={false}
+          />
+          <Result
+            style={{ marginTop: 50 }}
+            icon={<BulbOutlined />}
+            title={`" When I have a little money, I buy books; and if I have any left, I buy food and clothes "`}
+            subTitle="~ Erasmus"
+          />
+        </Col>
+        <Col span={12}>
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 2,
+            }}
+            dataSource={books?.filter((book) => {
+              return !book.isBuyed;
+            })}
+            footer={
+              <Result
+                title={`" We buy books because we believe we're buying the time to read "`}
+                subTitle="~ Warren Zevon"
               />
-              {book.reason}
-              {
-                <Button
-                  style={{ marginLeft: 15 }}
-                  type="primary"
-                  onClick={() => handleBuyBook(book)}
-                >
-                  Done
-                </Button>
-              }
-            </List.Item>
-          )}
-        />
-      </div>
-      <div>
+            }
+            renderItem={(book) => (
+              <List.Item
+                key={book.price}
+                actions={[
+                  <IconText
+                    icon={DollarOutlined}
+                    text={`Rp.${book.price}`}
+                    key="list-vertical-star-o"
+                  />,
+                  <IconText
+                    icon={RiBookMarkFill}
+                    text={book.category}
+                    key="list-vertical-like-o"
+                  />,
+                ]}
+                extra={
+                  <img
+                    width={325}
+                    height={300}
+                    alt="BookImg"
+                    src={book.image}
+                  />
+                }
+              >
+                <List.Item.Meta
+                  avatar={
+                    <Avatar src="https://i.pinimg.com/564x/5e/af/f3/5eaff33f83a4d168947c965bbf4f8c40.jpg" />
+                  }
+                  title={
+                    <Typography.Title style={{ color: "#3182CE" }} level={4}>
+                      {book.title}
+                    </Typography.Title>
+                  }
+                  description={book.author}
+                />
+                {book.reason}
+                <Divider type="horizontal" />
+                {
+                  <Button
+                    style={{
+                      background: "#3182CE",
+                      color: "white",
+                      fontWeight: "bold",
+                    }}
+                    onClick={() => handleBuyBook(book)}
+                  >
+                    <CheckOutlined />
+                    Already Buyed
+                  </Button>
+                }
+              </List.Item>
+            )}
+          />
+        </Col>
+      </Row>
+      <>
         <Modal
-          title="Up Coming Books"
+          title={
+            <Typography.Title style={{ color: "#3182CE" }} level={4}>
+              Up Coming Books
+            </Typography.Title>
+          }
+          width={700}
+          centered
           visible={isModalVisible}
-          onOk={handleOkModal}
-          onCancel={handleCancelModal}
+          onOk={() => setIsModalVisible(false)}
+          onCancel={() => setIsModalVisible(false)}
         >
-          <Form layout={formLayout} {...formItemLayout}>
-            <Form.Item label="Title" htmlFor="title">
+          <Form layout={formLayout}>
+            <Form.Item
+              label={
+                <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                  Title
+                </Typography.Title>
+              }
+              htmlFor="title"
+            >
               <AntdInput
                 id="title"
-                placeholder="Type The Title Of Your Books"
+                placeholder="Type The Title Of Your Upcoming Book"
                 allowClear
-                onChange={handleFormTitleChange}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setTitleValue(event.target.value)
+                }
                 value={titleValue}
               />
             </Form.Item>
-            <Form.Item label="Writer" htmlFor="writer">
+            <Form.Item
+              label={
+                <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                  Author
+                </Typography.Title>
+              }
+              htmlFor="author"
+            >
               <AntdInput
-                id="writer"
-                placeholder="Type The Writer"
+                id="author"
+                placeholder="Type The Author Of Your Upcoming Book"
                 allowClear
-                onChange={handleFormWriterChange}
-                value={writerValue}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setAuthorValue(event.target.value)
+                }
+                value={authorValue}
               />
             </Form.Item>
-            <Form.Item label="Price" htmlFor="price">
+            <Form.Item
+              label={
+                <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                  Category
+                </Typography.Title>
+              }
+              htmlFor="category"
+            >
+              <AntdInput
+                id="category"
+                placeholder="Type The Category Of Your UpcomingBook"
+                allowClear
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setCategoryValue(event.target.value)
+                }
+                value={categoryValue}
+              />
+            </Form.Item>
+            <Form.Item
+              label={
+                <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                  Price
+                </Typography.Title>
+              }
+              htmlFor="price"
+            >
               <AntdInput
                 id="price"
                 placeholder="Input the price"
                 allowClear
-                onChange={handleFormPriceChange}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPriceValue(event.target.value)
+                }
                 value={priceValue}
               />
             </Form.Item>
-            <Form.Item label="Image" htmlFor="image">
+            <Form.Item
+              label={
+                <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                  Image URL
+                </Typography.Title>
+              }
+              htmlFor="image"
+            >
               <AntdInput
                 id="image"
                 placeholder="Input Link Of The Image"
                 allowClear
-                onChange={handleFormImageChange}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setImageValue(event.target.value)
+                }
                 value={imageValue}
               />
             </Form.Item>
-            <Form.Item label="Reason" htmlFor="reason">
+            <Form.Item
+              label={
+                <Typography.Title style={{ color: "#3182CE" }} level={5}>
+                  Reason
+                </Typography.Title>
+              }
+              htmlFor="reason"
+            >
               <TextArea
                 id="reason"
                 placeholder="Why you decide to buy the book ?"
                 rows={4}
                 allowClear
-                onChange={handleFormReasonChange}
+                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  setReasonValue(event.target.value)
+                }
                 value={reasonValue}
               />
             </Form.Item>
             <Form.Item>
               <Button
-                {...buttonItemLayout}
                 type="primary"
                 htmlType="submit"
                 onClick={handleSubmitForm}
@@ -227,7 +333,7 @@ const UpComingBooks = () => {
             </Form.Item>
           </Form>
         </Modal>
-      </div>
+      </>
     </div>
   );
 };
