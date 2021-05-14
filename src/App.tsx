@@ -85,7 +85,7 @@ function App() {
               color: "lightblue",
             }}
           >
-            Book Management System, Created By Danny ©2020
+            Book Management System, Created By Danny Dwi Cahyono ©2020
           </Typography.Title>
           <Space size="large">
             <Link to="https://github.com/dannycahyo">
