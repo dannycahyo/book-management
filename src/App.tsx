@@ -3,11 +3,12 @@ import LandingPage from "./LandingPage";
 import UpComingBooks from "./UpComingBooks";
 import MyBooks from "./MyBooks";
 import Logo from "./Logo";
-import { Col, Layout, Menu, Row, Space, Typography } from "antd";
+import { Col, Layout, Menu, Row, Space, Typography, Breadcrumb } from "antd";
 import {
   GithubOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { Switch, Link, Route, useLocation } from "react-router-dom";
 
@@ -22,7 +23,7 @@ function App() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginBottom: 40,
+            marginBottom: 12,
           }}
         >
           <Logo />
@@ -59,6 +60,19 @@ function App() {
           </Menu>
         </Header>
         <Content style={{ padding: "0 25px" }}>
+          <Breadcrumb style={{ marginBottom: 12 }}>
+            <Link to="/">
+              <Breadcrumb.Item>
+                Home <HomeOutlined />
+              </Breadcrumb.Item>
+            </Link>
+            <Link to="/mybooks">
+              <Breadcrumb.Item>My Books</Breadcrumb.Item>
+            </Link>
+            <Link to="/upcomingbooks">
+              <Breadcrumb.Item>Upcoming Book</Breadcrumb.Item>
+            </Link>
+          </Breadcrumb>
           <div style={{ padding: 15, background: "#fff" }}>
             <Switch>
               <Route exact path="/" component={LandingPage} />
@@ -67,7 +81,6 @@ function App() {
             </Switch>
           </div>
         </Content>
-
         <Footer
           style={{
             alignItems: "center",
