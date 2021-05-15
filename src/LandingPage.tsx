@@ -51,14 +51,14 @@ const LandingPage = () => {
   return (
     <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
       <Row justify="center" gutter={[48, 24]} align="middle">
-        <Col xxl={14} xl={10} lg={18} md={24} sm={24} xs={24}>
+        <Col xxl={14} xl={10} lg={18} md={18} sm={24} xs={24}>
           <div>
             <Typography.Title style={{ color: "#4A5568", fontSize: 40 }}>
               Manage Your Valuable Book
             </Typography.Title>
           </div>
           <div>
-            <Typography.Title style={{ color: "#3182CE", fontSize: 40 }}>
+            <Typography.Title style={{ color: "#3182CE", fontSize: 38 }}>
               Properly & Systematically
             </Typography.Title>
           </div>
@@ -76,7 +76,7 @@ const LandingPage = () => {
           xxl={10}
           xl={14}
           lg={18}
-          md={24}
+          md={18}
           sm={0}
           xs={0}
         >
@@ -106,7 +106,7 @@ const LandingPage = () => {
         </Col>
       </Row>
       <Row justify="center" align="middle" style={{ marginTop: "34px" }}>
-        <Col xxl={18} xl={20} lg={18} md={20} sm={24} xs={22}>
+        <Col xxl={18} xl={20} lg={18} md={20} sm={24} xs={24}>
           <Steps current={current}>
             {tutorials.map((tutorial) => (
               <Steps.Step key={tutorial.title} title={tutorial.title} />
@@ -119,7 +119,7 @@ const LandingPage = () => {
           lg={18}
           md={20}
           sm={24}
-          xs={22}
+          xs={24}
           style={{
             alignItems: "center",
             minHeight: "450px",

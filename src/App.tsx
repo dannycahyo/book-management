@@ -58,8 +58,8 @@ function App() {
             </Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ padding: "0 50px" }}>
-          <div style={{ padding: 24, background: "#fff" }}>
+        <Content style={{ padding: "0 25px" }}>
+          <div style={{ padding: 15, background: "#fff" }}>
             <Switch>
               <Route exact path="/" component={LandingPage} />
               <Route exact path="/mybooks" component={MyBooks} />
