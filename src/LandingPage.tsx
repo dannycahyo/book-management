@@ -51,14 +51,14 @@ const LandingPage = () => {
   return (
     <div style={{ width: "80%", marginRight: "auto", marginLeft: "auto" }}>
       <Row justify="space-between" gutter={70} align="middle">
-        <Col span={12}>
+        <Col span={12} xxl={12} xl={9} lg={8}>
           <div>
-            <Typography.Title style={{ color: "#4A5568", fontSize: 50 }}>
+            <Typography.Title style={{ color: "#4A5568", fontSize: 40 }}>
               Manage Your Valuable Book
             </Typography.Title>
           </div>
           <div>
-            <Typography.Title style={{ color: "#3182CE", fontSize: 50 }}>
+            <Typography.Title style={{ color: "#3182CE", fontSize: 40 }}>
               Properly & Systematically
             </Typography.Title>
           </div>
@@ -71,28 +71,28 @@ const LandingPage = () => {
             </Typography.Text>
           </div>
         </Col>
-        <Col span={12} style={{ marginTop: 20 }}>
+        <Col span={12} style={{ marginTop: 20 }} xxl={12} xl={15} lg={16}>
           <Carousel autoplay>
             <Image
               alt="Heroes"
               src={FirstImg}
               preview={false}
-              height={525}
-              width={575}
+              height={450}
+              width={520}
             />
             <Image
               alt="Heroes"
               src={SecondImg}
               preview={false}
-              height={525}
-              width={575}
+              height={450}
+              width={520}
             />
             <Image
               alt="Heroes"
               src={ThirdImg}
               preview={false}
-              height={525}
-              width={575}
+              height={450}
+              width={520}
             />
           </Carousel>
         </Col>

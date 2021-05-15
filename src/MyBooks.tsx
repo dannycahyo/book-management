@@ -120,7 +120,7 @@ const MyBooks = () => {
   return (
     <div>
       <Row justify="center">
-        <Col span={20}>
+        <Col span={22}>
           <div
             style={{
               display: "flex",
@@ -151,12 +151,13 @@ const MyBooks = () => {
           ) : (
             <List
               grid={{
+                column: 3,
                 gutter: 42,
                 xs: 1,
                 sm: 2,
-                md: 4,
-                lg: 4,
-                xl: 6,
+                md: 2,
+                lg: 2,
+                xl: 3,
                 xxl: 3,
               }}
               dataSource={filteredBooks}
@@ -188,7 +189,7 @@ const MyBooks = () => {
                     hoverable
                     cover={
                       <Image
-                        style={{ height: 375 }}
+                        style={{ height: 425 }}
                         src={book.image}
                         alt="BookImg"
                         preview={false}

@@ -81,8 +81,8 @@ const UpComingBooks = () => {
 
   return (
     <div>
-      <Row justify="space-between" gutter={[48, 12]}>
-        <Col span={12}>
+      <Row justify="center" gutter={[48, 12]}>
+        <Col span={12} xxl={12} xl={10} xs={0}>
           <div
             style={{
               display: "flex",
@@ -91,7 +91,7 @@ const UpComingBooks = () => {
               marginTop: 20,
             }}
           >
-            <Typography.Title style={{ color: "#3182CE" }} level={1}>
+            <Typography.Title style={{ color: "#3182CE" }} level={2}>
               This Is The List Of Your Future Book
             </Typography.Title>
             <Button
@@ -119,13 +119,13 @@ const UpComingBooks = () => {
             preview={false}
           />
           <Result
-            style={{ marginTop: 50 }}
+            style={{ marginTop: 30 }}
             icon={<BulbOutlined />}
             title={`" When I have a little money, I buy books; and if I have any left, I buy food and clothes "`}
             subTitle="~ Erasmus"
           />
         </Col>
-        <Col span={12}>
+        <Col span={12} xxl={12} xl={14}>
           <List
             itemLayout="vertical"
             size="large"
@@ -161,8 +161,8 @@ const UpComingBooks = () => {
                 ]}
                 extra={
                   <img
-                    width={325}
-                    height={300}
+                    width={275}
+                    height={250}
                     alt="BookImg"
                     src={book.image}
                   />
