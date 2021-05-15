@@ -32,26 +32,26 @@ const LandingPage = () => {
 
   const tutorials: Tutorial[] = [
     {
-      title: "Landing Page",
+      title: "Main",
       content:
-        "This is the main page. You will get some of the information about the purpose and the story behind the application created and also some detailed explanation about every page, such as the workflow and feature on it.",
+        "In Landing Page. You will get some of the information about the purpose and the story behind the application created and also some detailed explanation about every page, such as the workflow and feature on it.",
     },
     {
-      title: "My Book Page",
+      title: "Second",
       content:
-        "This page contains a list of all your own books. Moreover, you can see the detail of your book and manipulate it, for example, edit the content of your current book and also delete it when it is probably lost and borrowed by your friend and never get back.",
+        "My Book Page contains a list of all your own books. Moreover, you can see the detail of your book and manipulate it, for example, edit the content of your current book and also delete it when it is probably lost and borrowed by your friend and never get back.",
     },
     {
-      title: "Upcoming Book Page",
+      title: "Third",
       content:
-        " This page will help you by reminding you of some of the quotes before unsure about buying a new book and also giving you a chance to manipulate the upcoming book. For example, adding and seeing the list of it.",
+        " Upcoming Book Page will help you by reminding you of some of the quotes before unsure about buying a new book and also giving you a chance to manipulate the upcoming book. For example, adding and seeing the list of it.",
     },
   ];
 
   return (
-    <div style={{ width: "80%", marginRight: "auto", marginLeft: "auto" }}>
-      <Row justify="space-between" gutter={70} align="middle">
-        <Col span={12} xxl={12} xl={9} lg={8}>
+    <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
+      <Row justify="center" gutter={[48, 24]} align="middle">
+        <Col xxl={14} xl={10} lg={18} md={24} sm={24} xs={24}>
           <div>
             <Typography.Title style={{ color: "#4A5568", fontSize: 40 }}>
               Manage Your Valuable Book
@@ -71,7 +71,15 @@ const LandingPage = () => {
             </Typography.Text>
           </div>
         </Col>
-        <Col span={12} style={{ marginTop: 20 }} xxl={12} xl={15} lg={16}>
+        <Col
+          style={{ marginTop: 20 }}
+          xxl={10}
+          xl={14}
+          lg={18}
+          md={24}
+          sm={0}
+          xs={0}
+        >
           <Carousel autoplay>
             <Image
               alt="Heroes"
@@ -97,60 +105,74 @@ const LandingPage = () => {
           </Carousel>
         </Col>
       </Row>
-      <div id="tutorials">
-        <Row justify="center" style={{ marginTop: "34px" }}>
-          <Col span={20}>
-            <Steps current={current}>
-              {tutorials.map((tutorial) => (
-                <Steps.Step key={tutorial.title} title={tutorial.title} />
-              ))}
-            </Steps>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                minHeight: "200px",
-                marginTop: "16px",
-                paddingTop: "80px",
-                textAlign: "center",
-                backgroundColor: "#90CDF4",
-                border: "1px dashed #e9e9e9",
-                borderRadius: "2px",
-                color: "black",
-              }}
+      <Row justify="center" align="middle" style={{ marginTop: "34px" }}>
+        <Col xxl={18} xl={20} lg={18} md={20} sm={24} xs={22}>
+          <Steps current={current}>
+            {tutorials.map((tutorial) => (
+              <Steps.Step key={tutorial.title} title={tutorial.title} />
+            ))}
+          </Steps>
+        </Col>
+        <Col
+          xxl={18}
+          xl={20}
+          lg={18}
+          md={20}
+          sm={24}
+          xs={22}
+          style={{
+            alignItems: "center",
+            minHeight: "450px",
+            marginTop: "16px",
+            paddingTop: "80px",
+            textAlign: "center",
+            backgroundColor: "#90CDF4",
+            border: "1px dashed #e9e9e9",
+            borderRadius: "2px",
+            color: "black",
+          }}
+        >
+          <Image
+            alt="Tutorial"
+            src={TutorialImg}
+            preview={false}
+            height={150}
+          />
+          <Typography.Paragraph style={{ marginRight: 10, fontSize: "20px" }}>
+            {tutorials[current].content}
+          </Typography.Paragraph>
+        </Col>
+      </Row>
+      <Row justify="center">
+        <Col
+          xxl={18}
+          xl={20}
+          lg={18}
+          md={20}
+          sm={24}
+          xs={22}
+          style={{ marginTop: "24px" }}
+        >
+          {current < tutorials.length - 1 && (
+            <Button type="primary" onClick={() => next()}>
+              Next
+            </Button>
+          )}
+          {current === tutorials.length - 1 && (
+            <Button
+              type="primary"
+              onClick={() => message.success("Go Ahead & Manage Your Book!")}
             >
-              <Image alt="Tutorial" src={TutorialImg} preview={false} />
-              <Typography.Paragraph
-                style={{ marginRight: 10, fontSize: "20px" }}
-              >
-                {tutorials[current].content}
-              </Typography.Paragraph>
-            </div>
-            <div style={{ marginTop: "24px" }}>
-              {current < tutorials.length - 1 && (
-                <Button type="primary" onClick={() => next()}>
-                  Next
-                </Button>
-              )}
-              {current === tutorials.length - 1 && (
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    message.success("Go Ahead & Manage Your Book!")
-                  }
-                >
-                  Done
-                </Button>
-              )}
-              {current > 0 && (
-                <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                  Previous
-                </Button>
-              )}
-            </div>
-          </Col>
-        </Row>
-      </div>
+              Done
+            </Button>
+          )}
+          {current > 0 && (
+            <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+              Previous
+            </Button>
+          )}
+        </Col>
+      </Row>
     </div>
   );
 };

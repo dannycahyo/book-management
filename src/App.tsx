@@ -3,7 +3,7 @@ import LandingPage from "./LandingPage";
 import UpComingBooks from "./UpComingBooks";
 import MyBooks from "./MyBooks";
 import Logo from "./Logo";
-import { Layout, Menu, Space, Typography } from "antd";
+import { Col, Layout, Menu, Row, Space, Typography } from "antd";
 import {
   GithubOutlined,
   InstagramOutlined,
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div>
-      <Layout className="layout">
+      <Layout>
         <Header
           style={{
             display: "flex",
@@ -67,10 +67,9 @@ function App() {
             </Switch>
           </div>
         </Content>
+
         <Footer
           style={{
-            display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
             textAlign: "center",
             background: "#001529",
@@ -78,32 +77,40 @@ function App() {
             marginTop: 40,
           }}
         >
-          <Logo />
-          <Typography.Title
-            level={5}
-            style={{
-              color: "lightblue",
-            }}
-          >
-            Book Management System, Created By Danny Dwi Cahyono ©2020
-          </Typography.Title>
-          <Space size="large">
-            <Link to="https://github.com/dannycahyo">
-              <GithubOutlined
-                style={{ fontSize: "25px", color: "lightblue" }}
-              />
-            </Link>
-            <Link to="https://www.linkedin.com/in/danny-cahyo/">
-              <LinkedinOutlined
-                style={{ fontSize: "25px", color: "lightblue" }}
-              />
-            </Link>
-            <Link to="https://www.instagram.com/danny_cahyo/">
-              <InstagramOutlined
-                style={{ fontSize: "25px", color: "lightblue" }}
-              />
-            </Link>
-          </Space>
+          <Row align="middle">
+            <Col xs={14} sm={14} md={6} lg={8} xl={8} xxl={8}>
+              <Logo />
+            </Col>
+            <Col xs={12} sm={12} md={12} lg={8} xl={8} xxl={8}>
+              <Typography.Title
+                level={5}
+                style={{
+                  color: "lightblue",
+                }}
+              >
+                Copyright ©2020 Book App
+              </Typography.Title>
+            </Col>
+            <Col xs={12} sm={12} md={6} lg={8} xl={8} xxl={8}>
+              <Space size="large">
+                <Link to="https://github.com/dannycahyo">
+                  <GithubOutlined
+                    style={{ fontSize: "25px", color: "lightblue" }}
+                  />
+                </Link>
+                <Link to="https://www.linkedin.com/in/danny-cahyo/">
+                  <LinkedinOutlined
+                    style={{ fontSize: "25px", color: "lightblue" }}
+                  />
+                </Link>
+                <Link to="https://www.instagram.com/danny_cahyo/">
+                  <InstagramOutlined
+                    style={{ fontSize: "25px", color: "lightblue" }}
+                  />
+                </Link>
+              </Space>
+            </Col>
+          </Row>
         </Footer>
       </Layout>
     </div>

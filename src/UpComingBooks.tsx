@@ -81,8 +81,8 @@ const UpComingBooks = () => {
 
   return (
     <div>
-      <Row justify="center" gutter={[48, 12]}>
-        <Col span={12} xxl={12} xl={10} xs={0}>
+      <Row justify="center" align="middle">
+        <Col xxl={12} xl={10} lg={20} md={20} sm={20} xs={20}>
           <div
             style={{
               display: "flex",
@@ -91,7 +91,10 @@ const UpComingBooks = () => {
               marginTop: 20,
             }}
           >
-            <Typography.Title style={{ color: "#3182CE" }} level={2}>
+            <Typography.Title
+              style={{ color: "#3182CE", textAlign: "center" }}
+              level={3}
+            >
               This Is The List Of Your Future Book
             </Typography.Title>
             <Button
@@ -111,21 +114,14 @@ const UpComingBooks = () => {
               <CaretUpOutlined />
             </Button>
           </div>
-          <Image
-            height={550}
-            style={{ marginTop: 20 }}
-            src={SvgImage}
-            alt="Banner"
-            preview={false}
-          />
+          <Image height={550} src={SvgImage} alt="Banner" preview={false} />
           <Result
-            style={{ marginTop: 30 }}
             icon={<BulbOutlined />}
             title={`" When I have a little money, I buy books; and if I have any left, I buy food and clothes "`}
             subTitle="~ Erasmus"
           />
         </Col>
-        <Col span={12} xxl={12} xl={14}>
+        <Col span={12} xxl={12} xl={14} lg={20} md={24} sm={24} xs={24}>
           <List
             itemLayout="vertical"
             size="large"

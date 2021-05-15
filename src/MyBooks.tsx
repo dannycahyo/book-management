@@ -119,33 +119,22 @@ const MyBooks = () => {
 
   return (
     <div>
-      <Row justify="center">
-        <Col span={22}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: 20,
-              justifyContent: "center",
-            }}
-          >
-            <Typography.Title
-              style={{ color: "#3182CE", marginTop: 5 }}
-              level={3}
-            >
-              Find Your Book
-            </Typography.Title>
-            <AntdInput
-              style={{ width: "50%", marginLeft: 20 }}
-              placeholder="Are You Looking For Some Books ?"
-              allowClear
-              size="middle"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setSearchValue(event.target.value)
-              }
-              value={searchValue}
-            />
-          </div>
+      <Row justify="space-around" align="middle" style={{ marginBottom: 30 }}>
+        <Col xxl={10} xl={12} lg={14} md={14} sm={16} xs={18}>
+          <AntdInput.Search
+            style={{ marginLeft: 20, color: "#3182CE" }}
+            placeholder="Find Your Book!"
+            allowClear
+            size="large"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchValue(event.target.value)
+            }
+            value={searchValue}
+          />
+        </Col>
+      </Row>
+      <Row justify="center" align="middle">
+        <Col xxl={18} xl={24} lg={18} md={24} sm={16} xs={24}>
           {filteredBooks?.length === 0 ? (
             <Result status="404" title="404" subTitle="Can't Find Your Book" />
           ) : (
@@ -154,7 +143,7 @@ const MyBooks = () => {
                 column: 3,
                 gutter: 42,
                 xs: 1,
-                sm: 2,
+                sm: 1,
                 md: 2,
                 lg: 2,
                 xl: 3,
@@ -189,7 +178,7 @@ const MyBooks = () => {
                     hoverable
                     cover={
                       <Image
-                        style={{ height: 425 }}
+                        style={{ height: 350 }}
                         src={book.image}
                         alt="BookImg"
                         preview={false}

@@ -13,7 +13,7 @@ const Logo = () => {
           alignItems: "center",
           color: "lightblue",
           marginTop: 16,
-          marginRight: 16,
+          marginLeft: 40,
         }}
       >
         <BookTwoTone style={{ marginRight: 2 }} />
