@@ -239,7 +239,7 @@ const MyBooks = () => {
                 }
                 bordered
                 layout="vertical"
-                column={4}
+                column={{ lg: 4, md: 2, sm: 2, xs: 2 }}
               >
                 <Descriptions.Item
                   label={
