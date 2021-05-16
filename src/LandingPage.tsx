@@ -51,7 +51,7 @@ const LandingPage = () => {
   return (
     <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
       <Row justify="center" gutter={[48, 24]} align="middle">
-        <Col xxl={14} xl={10} lg={18} md={18} sm={24} xs={24}>
+        <Col xxl={14} xl={9} lg={18} md={18} sm={24} xs={24}>
           <div>
             <Typography.Title style={{ color: "#4A5568", fontSize: 40 }}>
               Manage Your Valuable Book
@@ -74,7 +74,7 @@ const LandingPage = () => {
         <Col
           style={{ marginTop: 20 }}
           xxl={10}
-          xl={14}
+          xl={15}
           lg={18}
           md={18}
           sm={0}
