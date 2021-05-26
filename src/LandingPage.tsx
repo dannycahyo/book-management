@@ -62,7 +62,7 @@ const LandingPage = () => {
               Properly & Systematically
             </Typography.Title>
           </div>
-          <div style={{ width: "80%", marginLeft: 10 }}>
+          <div style={{ width: "80%" }}>
             <Typography.Text>
               As a reader, we all have the same concern about managing our
               current book, or the upcoming book. For instance, we often forget
@@ -70,6 +70,17 @@ const LandingPage = () => {
               our desire to buy a new book. Book App solves that common problem.
             </Typography.Text>
           </div>
+          <Button
+            size="large"
+            style={{
+              background: "#3182CE",
+              color: "white",
+              fontWeight: "bold",
+              marginTop: 20,
+            }}
+          >
+            Watch Demo
+          </Button>
         </Col>
         <Col
           style={{ marginTop: 20 }}
@@ -125,6 +136,8 @@ const LandingPage = () => {
             minHeight: "450px",
             marginTop: "16px",
             paddingTop: "80px",
+            paddingRight: "20px",
+            paddingLeft: "20px",
             textAlign: "center",
             backgroundColor: "#90CDF4",
             border: "1px dashed #e9e9e9",
@@ -136,7 +149,7 @@ const LandingPage = () => {
             alt="Tutorial"
             src={TutorialImg}
             preview={false}
-            height={150}
+            height={250}
           />
           <Typography.Paragraph style={{ marginRight: 10, fontSize: "20px" }}>
             {tutorials[current].content}

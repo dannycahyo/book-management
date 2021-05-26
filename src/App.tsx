@@ -1,9 +1,16 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import LandingPage from "./LandingPage";
-import UpComingBooks from "./UpComingBooks";
-import MyBooks from "./MyBooks";
 import Logo from "./Logo";
-import { Col, Layout, Menu, Row, Space, Typography, Breadcrumb } from "antd";
+import {
+  Col,
+  Layout,
+  Menu,
+  Row,
+  Space,
+  Typography,
+  Breadcrumb,
+  Result,
+} from "antd";
 import {
   GithubOutlined,
   InstagramOutlined,
@@ -11,6 +18,9 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 import { Switch, Link, Route, useLocation } from "react-router-dom";
+
+const MyBooks = lazy(() => import("./MyBooks"));
+const UpComingBooks = lazy(() => import("./UpComingBooks"));
 
 function App() {
   const { Header, Content, Footer } = Layout;
@@ -74,11 +84,21 @@ function App() {
             </Link>
           </Breadcrumb>
           <div style={{ padding: 15, background: "#fff" }}>
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/mybooks" component={MyBooks} />
-              <Route exact path="/upcomingbooks" component={UpComingBooks} />
-            </Switch>
+            <Suspense
+              fallback={
+                <Result
+                  status="404"
+                  title="Loading"
+                  subTitle="Please Wait For A While"
+                />
+              }
+            >
+              <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/mybooks" component={MyBooks} />
+                <Route exact path="/upcomingbooks" component={UpComingBooks} />
+              </Switch>
+            </Suspense>
           </div>
         </Content>
         <Footer
@@ -91,10 +111,10 @@ function App() {
           }}
         >
           <Row align="middle">
-            <Col xs={14} sm={14} md={6} lg={8} xl={8} xxl={8}>
+            <Col xs={24} sm={14} md={6} lg={8} xl={8} xxl={8}>
               <Logo />
             </Col>
-            <Col xs={12} sm={12} md={12} lg={8} xl={8} xxl={8}>
+            <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
               <Typography.Title
                 level={5}
                 style={{
@@ -104,7 +124,7 @@ function App() {
                 Copyright ©2020 Book App
               </Typography.Title>
             </Col>
-            <Col xs={12} sm={12} md={6} lg={8} xl={8} xxl={8}>
+            <Col xs={24} sm={12} md={6} lg={8} xl={8} xxl={8}>
               <Space size="large">
                 <Link to="https://github.com/dannycahyo">
                   <GithubOutlined
