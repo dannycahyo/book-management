@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Carousel,
   Row,
@@ -13,6 +13,7 @@ import FirstImg from "./Assets/undraw_Reading_book_re_kqpk.svg";
 import SecondImg from "./Assets/undraw_Books_l33t.svg";
 import ThirdImg from "./Assets/undraw_Reading_list_re_bk72.svg";
 import TutorialImg from "./Assets/undraw_reading_time_gvg0.svg";
+import Modal from "antd/lib/modal/Modal";
 
 type Tutorial = {
   title: string;
@@ -20,7 +21,7 @@ type Tutorial = {
 };
 
 const LandingPage = () => {
-  const [current, setCurrent] = React.useState<number>(0);
+  const [current, setCurrent] = useState<number>(0);
 
   const next = () => {
     setCurrent(current + 1);
@@ -29,6 +30,8 @@ const LandingPage = () => {
   const prev = () => {
     setCurrent(current - 1);
   };
+
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const tutorials: Tutorial[] = [
     {
@@ -78,9 +81,30 @@ const LandingPage = () => {
               fontWeight: "bold",
               marginTop: 20,
             }}
+            onClick={() => setIsModalVisible(true)}
           >
             Watch Demo
           </Button>
+          <>
+            <Modal
+              title={
+                <Typography.Title style={{ color: "#3182CE" }} level={4}>
+                  Book App Demo
+                </Typography.Title>
+              }
+              width={700}
+              centered
+              visible={isModalVisible}
+              onOk={() => setIsModalVisible(false)}
+              onCancel={() => setIsModalVisible(false)}
+            >
+              <iframe
+                allowFullScreen
+                title="Book App Demo"
+                src="https://www.youtube.com/embed/3jWfG_iCHB0"
+              />
+            </Modal>
+          </>
         </Col>
         <Col
           style={{ marginTop: 20 }}

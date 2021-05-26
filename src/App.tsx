@@ -16,6 +16,7 @@ import {
   InstagramOutlined,
   LinkedinOutlined,
   HomeOutlined,
+  BulbOutlined,
 } from "@ant-design/icons";
 import { Switch, Link, Route, useLocation } from "react-router-dom";
 
@@ -87,7 +88,7 @@ function App() {
             <Suspense
               fallback={
                 <Result
-                  status="404"
+                  icon={<BulbOutlined />}
                   title="Loading"
                   subTitle="Please Wait For A While"
                 />
